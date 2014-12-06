@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>FlexBox</title>
+</head>
+
+<style>
+	iframe{
+		padding: 10px;
+		border: 5px solid pink;
+		background-color: white;
+		width: 330px;
+		height: 350px;
+	}
+	.iframes{
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;	
+
+		-webkit-flex-wrap: wrap;
+		flex-wrap: wrap;
+	}
+	#marco{
+		background-color: pink;
+		padding: 10px;
+		margin: 10px;
+		border: 3px solid black;
+		text-align: center;
+	}
+</style>
+
+<script src="zepto.min.js"></script>
+<script>
+	$(function(){
+		var urls = ["http://getbootstrap.com", "http://etvoila.es"];
+
+		function mostrar(urls){
+			var i, iframes ="", direccion="", numero=0;
+			$("#iframes").empty();
+			for (i=0; i<urls.length; ++i)
+			{
+				iframes += "<div>URL: <b>"+urls[i]+"</b><br>Número: <b>"+i+"</b><br><iframe src='" + urls[i] + "'></iframe></div>";
+				
+				$("#iframes").html(iframes);
+			}
+		};
+
+		$("#boton").on("click", function(){
+			urls.push($("#nuevo").val());
+			mostrar(urls);
+		});
+
+		$("#borrar").on("click", function(){
+			var aborrar = ($("#viejo").val());
+			if (aborrar > urls.length-1)
+			{
+				alert("Has seleccionado un índice mayor que la longitud del array");
+			}
+			else
+			{
+				urls.splice(aborrar,1);
+				mostrar(urls);
+			}
+		});
+
+		mostrar(urls);
+
+	});
+</script>
+
+<body>
+	<h1>Agregador de Iframes con FlexBox</h1>
+
+	Introduce una url: <input type="text" id="nuevo" placeholder="http://vishub.org"> <button type="button" id="boton">Añadir</button> <br>
+	Introduce un número de url a eliminar: <input type="text" id="viejo"> <button type="button" id="borrar">Borrar</button>
+
+	<p>
+		<div id="marco">
+			<div id="iframes" class="iframes"></div>
+		</div>
+	</p>
+</body>
+</html>
+
+<!--  Modificar el ejemplo de este tema para que se muestre el URL de cada iframe justo encima de la ventana donde se visualiza su contenido.
+
+- Los URLs irán numerados de forma que cada uno lleve delante el string URL_n, siendo n el índice en el array.
+
+- Añadir ademas un cajetín para introducir un número y un botón que borre el URL con el índice introducido cuando se pulse el botón.
+
+http://www.w3schools.com/jsref/jsref_splice.asp
+
+Se recomienda utilizar el método splice(…) para eliminar dicho elemento del array y después volver a repintar la lista de iFrames restantes. -->
